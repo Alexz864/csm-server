@@ -17,7 +17,7 @@ app.use(bodyParser());
 
 // test server
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("SERVER IS RUNNING!");
 });
 
 
