@@ -55,6 +55,14 @@ app.get('/read', async(req, res) => {
     })
 });
 
+// delete match
+app.delete("/delete/:id", async(req, res) => {
+    const id = req.params.id;
+    
+    await MatchModel.findByIdAndRemove(id).exec();
+    res.send('deleted');
+});
+
 // login
 app.use('/admin', AdminRouter);
 
