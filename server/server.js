@@ -5,7 +5,7 @@ require('./config/db');
 const express = require('express');
 
 // match model
-require('./models/Match');
+const MatchModel = require('./models/Match');
 
 const app = require('express')();
 const port = process.env.PORT || 5000;
