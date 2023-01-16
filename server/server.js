@@ -44,6 +44,17 @@ app.post('/insert', async(req, res) => {
     }
 });
 
+// read match
+app.get('/read', async(req, res) => {
+    MatchModel.find({}, (err, result) => {
+        if(err) {
+            res.send(err)
+        }
+
+        res.send(result);
+    })
+});
+
 // login
 app.use('/admin', AdminRouter);
 
