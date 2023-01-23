@@ -1,8 +1,9 @@
+// express
 const express = require('express');
 const router = express.Router();
 
-// mongodb admin model
-const Admin = require('../models/Admin');
+// mongodb admin schema
+const Admin = require('../schemas/AdminSchema');
 
 // password handler
 const bcrypt = require('bcrypt');

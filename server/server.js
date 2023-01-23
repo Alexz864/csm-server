@@ -1,71 +1,42 @@
-// mongodb
+// mongodb connect
 require('./config/db');
+
+// port
+const port = process.env.PORT || 5000;
 
 // express
 const express = require('express');
-
-// match model
-const MatchModel = require('./models/Match');
-
 const app = require('express')();
-const port = process.env.PORT || 5000;
-
-const AdminRouter = require('./api/Admin');
-
 app.use(express.json());
+
+// routers
+const AdminRouter = require('./api/Admin');
+const MatchRouter = require('./api/Match');
+const PlayerRouter = require('./api/Player');
 
 // cors
 const cors = require('cors');
 app.use(cors());
 
-// For accepting post form data
+// for accepting post form data
 const bodyParser = require('express').json;
 app.use(bodyParser());
 
-
-// test server
+// server response
 app.get("/", (req, res) => {
     res.send("SERVER IS RUNNING!");
-});
-
-// match test
-app.post('/insert', async(req, res) => {
-    const team1 = req.body.team1;
-    const team2 = req.body.team2;
-    const data = req.body.data;
-    const scor = req.body.scor;
-    const match = new MatchModel({team1: team1, team2: team2, data: data, scor: scor});
-
-    try {
-        await match.save();
-        res.send("Inserted data.");
-    } catch(err) {
-        console.log(err);
-    }
-});
-
-// read match
-app.get('/read', async(req, res) => {
-    MatchModel.find({}, (err, result) => {
-        if(err) {
-            res.send(err)
-        }
-
-        res.send(result);
-    })
-});
-
-// delete match
-app.delete("/delete/:id", async(req, res) => {
-    const id = req.params.id;
-    
-    await MatchModel.findByIdAndRemove(id).exec();
-    res.send('deleted');
 });
 
 // login
 app.use('/admin', AdminRouter);
 
+// match CRUD
+app.use('/match', MatchRouter);
+
+// upload image
+app.use('/player', PlayerRouter);
+
+// server listen
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-})
+});
